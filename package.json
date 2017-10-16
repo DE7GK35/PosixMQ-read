@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "posix-mq": "^1.0.2"
+  },
+  "description": "A Node-RED node that receives messsages form a Posix message queue",
+  "name": "node-red-contrib-posixmq-read",
+  "node-red": {
+    "nodes": {
+      "PosixMQ-read": "PosixMQ-read.js"
+    }
+  },
+  "version": "0.0.3",
+  "main": "PosixMQ-read.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "posix",
+    "message",
+    "queue"
+  ],
+  "author": "Denis Francesconi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/mikeokner/posix-mq.git"
+  }
+}
