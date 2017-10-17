@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "posix-mq": "^1.0.2"
+    "posix-mq": "1.0.2"
   },
   "description": "A Node-RED node that receives messsages form a Posix message queue",
   "name": "node-red-contrib-posixmq-read",
@@ -9,13 +9,15 @@
       "posixmq-read": "PosixMQ-read.js"
     }
   },
-  "version": "0.0.4",
+  "version": "0.0.39",
   "main": "PosixMQ-read.js",
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
+    "contrib",
+    "node-red",
     "posix",
     "message",
     "queue"
