@@ -19,7 +19,7 @@ module.exports = function (RED) {
   var node = this;
   var msg;
   var n;
-  var str;
+ 
 
   var send = false;
   posixmq.open({ name: '/events',create: true,mode: '0777',maxmsgs: 10, msgsize: 8 });
@@ -27,12 +27,12 @@ module.exports = function (RED) {
   node.warn("the /events message queue is open");
   readbuf = new Buffer(posixmq.msgsize);
   node.on('input', function() { 
+     var str = "";
      while ((n = posixmq.shift(readbuf)) !== false){
       send = true;
-      str == str & readbuf.toString('utf8', 0, n);
+      str = str + readbuf.toString('utf8', 0, n);
       };
       if (send){node.send({payload: str})};
-      str == "";
       send = false;
   });
   node.on('close', function() { 
