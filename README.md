@@ -1,7 +1,7 @@
 Description
 ===========
 
-![PosixMQ-flow](https://github.com/DE7GK35/PosixMQ-read/PosixMQ-flow.png?raw=true "Nodered-PosixMQ-flow")
+![PosixMQ-flow](https://github.com/DE7GK35/PosixMQ-read/PosixMQ-flow.png)
 
 A [node.js](http://nodejs.org/) library for using POSIX message queues. Originally forked from mscdex/pmq to provide additional customization of flags passed to `mq_open()`. Subsequently re-written to support v4+ using [Native Abstractions for Node.js](https://github.com/nodejs/nan).
 
