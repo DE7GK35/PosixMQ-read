@@ -26,7 +26,7 @@ $ npm install posixmq-read
 Values
 ========
 
-![Values](!https://raw.githubusercontent.com/DE7GK35/PosixMQ-read/master/editValues.png)
+![Values](https://raw.githubusercontent.com/DE7GK35/PosixMQ-read/master/editValues.png)
 
 * **msgname** - _String_ - name of message queue.
 
