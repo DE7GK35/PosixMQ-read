@@ -17,14 +17,22 @@ Requirements
 
 * Depends on [nan](https://www.npmjs.com/package/nan) & [posix-mq](https://www.npmjs.com/package/posix-mq) which will be automatically installed when running `npm install posixmq-read`.
 
-
 Install
 =======
 
 ```shell
 $ npm install posixmq-read
 ```
+Values
+========
 
+![Values](!https://raw.githubusercontent.com/DE7GK35/PosixMQ-read/master/editValues.png)
+
+* **msgname** - _String_ - name of message queue.
+
+* **maxmsgs** - _Number_ - The maximum number of messages in the queue.
+
+* **msgsize** - _Number_ - The maximum size of messages in the queue.
 
 Examples
 ========
@@ -35,9 +43,12 @@ Examples
 ```javascript
 var PosixMQ = require('posix-mq');
 
-module.exports = function (RED) {
+module.exports = function (RED) {    
  function PosixMQReadNode(config) {
   RED.nodes.createNode(this,config);
+  this.msgname = config.msgname;
+  this.msgsize = Number(config.msgsize);
+  this.maxmsgs = Number(config.maxmsgs);
   var posixmq = new PosixMQ();
   var node = this;
   var msg;
@@ -45,9 +56,9 @@ module.exports = function (RED) {
  
 
   var send = false;
-  posixmq.open({ name: '/events',create: true,mode: '0777',maxmsgs: 10, msgsize: 8 });
-  node.status({fill: "green", shape: "dot", text: "/events"});
-  node.warn("the /events message queue is open");
+  posixmq.open({ name: node.msgname.toString(),create: true,mode: '0777',maxmsgs: node.maxmsgs, msgsize: node.msgsize });
+  node.status({fill: "green", shape: "dot", text: node.msgname.toString()});
+  node.warn("the " + node.msgname.toString() + " message queue is open");
   readbuf = new Buffer(posixmq.msgsize);
   node.on('input', function() { 
      var str = "";
@@ -61,11 +72,12 @@ module.exports = function (RED) {
   node.on('close', function() { 
     posixmq.unlink();
     posixmq.close();
-    node.status({fill: "red", shape: "dot", text: "/events"});});
+    node.status({fill: "red", shape: "dot", text: node.msgname.toString()});});
  }
  RED.nodes.registerType("posixmq-read", PosixMQReadNode);
 }
 ```
+
 
 
 API
@@ -78,7 +90,7 @@ Events
 
 * **drain**() - Emitted when there is room for at least one message in the queue.
 
-Properties (read-only)
+Properties 
 ----------------------
 
 * **isFull** - _boolean_ - Convenience property that returns true if `curmsgs` === `maxmsgs`.
