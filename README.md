@@ -11,6 +11,8 @@ Requirements
 
 * [node.js](http://nodejs.org/) -- tested against v8+
 
+* [node-red](http://nodered.org/)
+
 * Linux 2.6.6+ or FreeBSD kernel with POSIX message queue support compiled in (`CONFIG_POSIX_MQUEUE`, which is enabled by default)
 
 * See `man mq_overview` for how/where to modify global POSIX message queue resource limits
