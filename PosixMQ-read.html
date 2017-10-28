@@ -3,7 +3,9 @@
         category: 'function',
         color: '#a6bbcf',
         defaults: {
-            name: {value:"Message Read"}
+            msgname: {value:"/events"},
+            msgsize: {value:"256"},
+            maxmsgs: {value:"500"}
         },
         inputs:1,
         outputs:1,
@@ -16,8 +18,16 @@
 
 <script type="text/x-red" data-template-name="posixmq-read">
     <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
+        <label for="node-input-msgname"><i class="icon-tag"></i> Queue Name</label>
+        <input type="text" id="node-input-msgname" placeholder="msgname">
+    </div>
+    <div class="form-row">
+        <label for="node-input-msgsize"><i class="icon-tag"></i> Message Size</label>
+        <input type="text" id="node-input-msgsize" placeholder="msgsize">
+    </div>
+    <div class="form-row">
+        <label for="node-input-maxmsgs"><i class="icon-tag"></i> Maximum # of messages</label>
+        <input type="text" id="node-input-maxmsgs" placeholder="maxmsgs">
     </div>
 </script>
 

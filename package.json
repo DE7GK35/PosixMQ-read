@@ -9,7 +9,7 @@
       "posixmq-read": "PosixMQ-read.js"
     }
   },
-  "version": "0.0.39",
+  "version": "0.2.0",
   "main": "PosixMQ-read.js",
   "devDependencies": {},
   "scripts": {
