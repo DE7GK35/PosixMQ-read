@@ -4,9 +4,7 @@ Description
 This is a fork of Denis Francesconi's [PosixMQ-read](https://github.com/DE7GK35/PosixMQ-read) node for Node-RED.
 Uses Mike Okner's [posix-mq](https://github.com/mikeokner/posix-mq) library.
 
-The intent of this expansion is to allow the user to also send to a Message Queue as well as read from it.
-
-This is a work in progress.
+This version allows the user to both write to a POSIX message queue and read from a POSIX message queue.
 
 Requirements
 ============
@@ -23,13 +21,12 @@ Requirements
 
 Values
 ========
-
-(Pending Edit)
-
-![Values](https://raw.githubusercontent.com/DE7GK35/PosixMQ-read/master/editValues.png)
+These settings are applicable to both the posixmq-read and posixmq-write nodes.
 
 * **msgname** - _String_ - name of message queue.
 
 * **maxmsgs** - _Number_ - The maximum number of messages in the queue.
 
 * **msgsize** - _Number_ - The maximum size of messages in the queue.
+
+* **create** - _Boolean_ - Create the message queue if it is not already present.

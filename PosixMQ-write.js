@@ -14,7 +14,7 @@
 var PosixMQ = require('posix-mq');
 
 module.exports = function (RED) {    
-   function PosixMQReadNode(config) {
+   function PosixMQWriteNode(config) {
       RED.nodes.createNode(this, config);
       var posixmq = new PosixMQ();
       var node = this;
@@ -38,18 +38,16 @@ module.exports = function (RED) {
       node.status({ fill: "green", shape: "dot", text: config.msgname });
       readbuf = new Buffer(posixmq.msgsize);
 
-      posixmq.on('messages', () => {
-         var n;
-         while ((n = posixmq.shift(readbuf)) !== false) {
-            var str = readbuf.toString('utf8', 0, n);
-            node.send({ payload: str });
-         }
-      });
-      node.on('close', () => {
-         posixmq.close();
-         node.status({ fill: "red", shape: "dot", text: config.msgname });
-      });
-   }
-   RED.nodes.registerType("posixmq-read", PosixMQReadNode);
-};
-
+  node.on('input', function(msg) { 
+     if(msg.payload)
+     {
+      posixmq.push(Buffer.from(msg.payload));
+     }
+  });
+   
+  node.on('close', function() { 
+    posixmq.close();
+    node.status({fill: "red", shape: "dot", text: config.msgname});});
+ }
+ RED.nodes.registerType("posixmq-write", PosixMQWriteNode);
+}
