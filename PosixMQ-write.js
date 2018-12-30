@@ -34,9 +34,7 @@ module.exports = function (RED) {
          node.status({ fill: "red", shape: "dot", text: config.msgname });
          return;
       }
-
       node.status({ fill: "green", shape: "dot", text: config.msgname });
-      readbuf = new Buffer(posixmq.msgsize);
 
   node.on('input', function(msg) { 
      if(msg.payload)

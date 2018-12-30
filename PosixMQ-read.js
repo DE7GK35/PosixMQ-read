@@ -36,7 +36,7 @@ module.exports = function (RED) {
       }
 
       node.status({ fill: "green", shape: "dot", text: config.msgname });
-      readbuf = new Buffer(posixmq.msgsize);
+      var readbuf = Buffer.alloc(posixmq.msgsize);
 
       posixmq.on('messages', () => {
          var n;
