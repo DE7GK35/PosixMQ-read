@@ -38,13 +38,17 @@ module.exports = function (RED) {
       node.status({ fill: "green", shape: "dot", text: config.msgname });
       var readbuf = Buffer.alloc(posixmq.msgsize);
 
-      posixmq.on('messages', () => {
+      var readMsg = () => {
          var n;
          while ((n = posixmq.shift(readbuf)) !== false) {
             var str = readbuf.toString('utf8', 0, n);
             node.send({ payload: str });
          }
-      });
+      }
+
+      posixmq.on('messages', readMsg);
+      readMsg();
+
       node.on('close', () => {
          posixmq.close();
          node.status({ fill: "red", shape: "dot", text: config.msgname });
