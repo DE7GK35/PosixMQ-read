@@ -11,10 +11,9 @@ mq.open({
     msgsize: 8
 });
 var writebuf = new Buffer(1);
-var r;
 do {
     writebuf[0] = Math.floor(Math.random() * 93) + 33;
     console.log("Writing "+ writebuf[0] +" ('"+ String.fromCharCode(writebuf[0]) +"') to the queue...");
-} while ((r = mq.push(writebuf)) !== false);
+} while (mq.push(writebuf) !== false);
     mq.unlink();
     mq.close();
