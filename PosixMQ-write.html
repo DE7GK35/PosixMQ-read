@@ -6,7 +6,8 @@
             msgname: {value:"/events"},
             msgsize: {value:"256"},
             maxmsgs: {value:"500"},
-            create: {value:true}
+            create: {value:true},
+            ofprotect: {value:true}
         },
         inputs:1,
         icon: "message.png",
@@ -22,7 +23,7 @@
         <input type="text" id="node-input-msgname" placeholder="msgname">
     </div>
     <div class="form-row">
-        <label for="node-input-msgsize"><i class="icon-tag"></i> Create if necessary</label>
+        <label for="node-input-create"><i class="icon-tag"></i> Create if necessary</label>
         <input type="checkbox" id="node-input-create">
     </div>
     <div class="form-row">
@@ -32,6 +33,10 @@
     <div class="form-row">
         <label for="node-input-maxmsgs"><i class="icon-tag"></i> Maximum # of messages</label>
         <input type="text" id="node-input-maxmsgs" placeholder="maxmsgs">
+    </div>
+    <div class="form-row">
+        <label for="node-input-ofprotect"><i class="icon-tag"></i> Overflow Protection</label>
+        <input type="checkbox" id="node-input-ofprotect">
     </div>
 </script>
 

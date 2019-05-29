@@ -18,6 +18,7 @@ module.exports = function (RED) {
       RED.nodes.createNode(this, config);
       var posixmq = new PosixMQ();
       var node = this;
+      var ofqueue = [];
 
       var cnf = {
          name: config.msgname,
@@ -34,14 +35,25 @@ module.exports = function (RED) {
          node.status({ fill: "red", shape: "dot", text: config.msgname });
          return;
       }
+      posixmq.on('drain', ()=>{
+         while((!posixmq.isFull) && (ofqueue.length>0)) posixmq.push(ofqueue.shift());
+      });
       node.status({ fill: "green", shape: "dot", text: config.msgname });
 
-  node.on('input', function(msg) { 
-     if(msg.payload)
-     {
-      posixmq.push(Buffer.from(msg.payload));
-     }
-  });
+      node.on('input', function (msg) {
+         if (msg.payload) {
+            if (!config.ofprotect) {
+               if (posixmq.isFull) throw Error("Message queue is full\n");
+               posixmq.push(Buffer.from(msg.payload));
+            }
+            else {
+               if (posixmq.isFull)
+                  ofqueue.push(Buffer.from(msg.payload));
+               else
+                  posixmq.push(Buffer.from(msg.payload));
+            }
+         }
+      });
    
   node.on('close', function() { 
     posixmq.close();
