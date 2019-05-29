@@ -10,7 +10,7 @@
       "posixmq-write": "PosixMQ-write.js"
     }
   },
-  "version": "0.2.2",
+  "version": "0.3.1",
   "main": "PosixMQ-read.js",
   "devDependencies": {},
   "scripts": {
