@@ -1,28 +1,29 @@
 <script type="text/javascript">
-    RED.nodes.registerType('posixmq-read',{
+    RED.nodes.registerType('posixmq-write',{
         category: 'function',
         color: '#a6bbcf',
         defaults: {
             msgname: {value:"/events"},
             msgsize: {value:"256"},
             maxmsgs: {value:"500"},
-            create: {value:true}
+            create: {value:true},
+            ofprotect: {value:true}
         },
-        outputs:1,
+        inputs:1,
         icon: "message.png",
         label: function() {
-            return this.name||"posixmq-read";
+            return this.name||"posixmq-write";
         }
     });
 </script>
 
-<script type="text/x-red" data-template-name="posixmq-read">
+<script type="text/x-red" data-template-name="posixmq-write">
     <div class="form-row">
         <label for="node-input-msgname"><i class="icon-tag"></i> Queue Name</label>
         <input type="text" id="node-input-msgname" placeholder="msgname">
     </div>
     <div class="form-row">
-        <label for="node-input-msgsize"><i class="icon-tag"></i> Create if necessary</label>
+        <label for="node-input-create"><i class="icon-tag"></i> Create if necessary</label>
         <input type="checkbox" id="node-input-create">
     </div>
     <div class="form-row">
@@ -33,8 +34,12 @@
         <label for="node-input-maxmsgs"><i class="icon-tag"></i> Maximum # of messages</label>
         <input type="text" id="node-input-maxmsgs" placeholder="maxmsgs">
     </div>
+    <div class="form-row">
+        <label for="node-input-ofprotect"><i class="icon-tag"></i> Overflow Protection</label>
+        <input type="checkbox" id="node-input-ofprotect">
+    </div>
 </script>
 
-<script type="text/x-red" data-help-name="posixmq-read">
-    <p>A simple node that receives message payloads from a Posix message queue</p>
+<script type="text/x-red" data-help-name="posixmq-write">
+    <p>A simple node that sends payloads to a Posix message queue</p>
 </script>

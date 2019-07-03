@@ -14,10 +14,11 @@
 var PosixMQ = require('posix-mq');
 
 module.exports = function (RED) {    
-   function PosixMQReadNode(config) {
+   function PosixMQWriteNode(config) {
       RED.nodes.createNode(this, config);
       var posixmq = new PosixMQ();
       var node = this;
+      var ofqueue = [];
 
       var cnf = {
          name: config.msgname,
@@ -34,26 +35,29 @@ module.exports = function (RED) {
          node.status({ fill: "red", shape: "dot", text: config.msgname });
          return;
       }
-
-      node.status({ fill: "green", shape: "dot", text: config.msgname });
-      var readbuf = Buffer.alloc(posixmq.msgsize);
-
-      var readMsg = () => {
-         var n;
-         while ((n = posixmq.shift(readbuf)) !== false) {
-            var str = readbuf.toString('utf8', 0, n);
-            node.send({ payload: str });
-         }
-      }
-
-      posixmq.on('messages', readMsg);
-      readMsg();
-
-      node.on('close', () => {
-         posixmq.close();
-         node.status({ fill: "red", shape: "dot", text: config.msgname });
+      posixmq.on('drain', ()=>{
+         while((!posixmq.isFull) && (ofqueue.length>0)) posixmq.push(ofqueue.shift());
       });
-   }
-   RED.nodes.registerType("posixmq-read", PosixMQReadNode);
-};
+      node.status({ fill: "green", shape: "dot", text: config.msgname });
 
+      node.on('input', function (msg) {
+         if (msg.payload) {
+            if (!config.ofprotect) {
+               if (posixmq.isFull) throw Error("Message queue is full\n");
+               posixmq.push(Buffer.from(msg.payload));
+            }
+            else {
+               if (posixmq.isFull)
+                  ofqueue.push(Buffer.from(msg.payload));
+               else
+                  posixmq.push(Buffer.from(msg.payload));
+            }
+         }
+      });
+   
+  node.on('close', function() { 
+    posixmq.close();
+    node.status({fill: "red", shape: "dot", text: config.msgname});});
+ }
+ RED.nodes.registerType("posixmq-write", PosixMQWriteNode);
+}
